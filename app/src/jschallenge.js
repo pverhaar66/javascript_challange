@@ -1,9 +1,12 @@
 
 
 var start = 0;
-var question = 0;
-var questionArray = [];
-var textArray =[];
+var questionNumber = 0;
+var questionHeaderArray = ["Bindend referendum", "Maatschappelijke dienstplicht", ];
+var questionTextArray =[
+	"Er moet een bindend referendum komen, waarmee burgers door het parlement aangenomen wetten kunnen tegenhouden.",
+	"Er moet een maatschappelijke dienstplicht voor jongeren komen. Zij kunnen dan dienen in het leger, bij de politie of in de zorg.",
+	"Om discriminatie op basis van de naam te voorkomen, moet anoniem solliciteren bij de overheid en bij openbare instellingen de regel worden."];
 
 
 var backbutton = document.getElementById('back');
@@ -39,24 +42,25 @@ function upStart(){
 }
 
 function upQuestion(){
-	if (question < 30) {
-	return question ++;	
+	if (questionNumber < 30) {
+	return questionNumber ++, NextQuestion();	
 	}
 	
 }
 
 function downQuestion(){
-	if(question > 0){
-	return question --;
+	if(questionNumber > 0){
+	return questionNumber --, NextQuestion();
 	}
 }
 
-function startQuest(){
-	upQuestion();
+function NextQuestion(){
+	if (start === 0){
 	upStart();
+	}
 	onloadhead();
-		h1.innerHTML= questionArray[question];
-		text.innerHTML =  textArray[question];
+		h1.innerHTML= questionHeaderArray[questionNumber];
+		text.innerHTML =  questionTextArray[questionNumber];
 	backbutton.setAttribute("onClick", "javascript:minQuestion();");	
 	option1.setAttribute("onClick", "javascript:upQuestion();");	
 	option2.setAttribute("onClick", "javascript:upQuestion();");	
