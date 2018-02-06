@@ -1,5 +1,9 @@
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 7872d6c8a1479dd9787d450e1ff0dd0f1f4b0fb1
 var start = 0;
 var question = 0;
 var questionArray = [];
@@ -62,4 +66,10 @@ function startQuest(){
 	option2.setAttribute("onClick", "javascript:upQuestion();");	
 	option3.setAttribute("onClick", "javascript:upQuestion();");
 	optionskip.setAttribute("onClick", "javascriptupQuestion();");	
+<<<<<<< HEAD
 }
+=======
+}
+=======
+>>>>>>> 4b5cadbb8007717362bee62fbacf3b277c9c98d4
+>>>>>>> 7872d6c8a1479dd9787d450e1ff0dd0f1f4b0fb1
