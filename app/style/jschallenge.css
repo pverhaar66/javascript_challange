@@ -1,0 +1,14 @@
+
+
+.section{
+	margin: auto;
+	height: 600px;
+	width: 900px;
+	border:black solid 2px;
+}
+#start{
+	margin: 100px 150px;
+	height: 160px;
+	width: 580px;
+	background-color: lightblue;
+}
