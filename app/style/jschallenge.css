@@ -1,5 +1,6 @@
 
 
+<<<<<<< HEAD
 .section{
 	margin: auto;
 	height: 600px;
@@ -11,4 +12,10 @@
 	height: 160px;
 	width: 580px;
 	background-color: lightblue;
+=======
+section{
+	height: 600px;
+	width: 600px;
+	border:black dashed 2px;
+>>>>>>> 4b5cadbb8007717362bee62fbacf3b277c9c98d4
 }
