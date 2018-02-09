@@ -3,14 +3,14 @@
 var start = 0;
 var questionNumber = 0;
 var awnsers = [];
-var questionHeaderArray = ["Bindend referendum", "Maatschappelijke dienstplicht", "Anoniem solliciteren", "Groepsbelediging", "Teelt en verkoop wiet", " Vervroegde vrijlating", "Vennootschapsbelasting", 
-			"Belasting hoogste inkomens", "Tijdelijke arbeidscontracten", "AOW-leeftijd 65","Verzekering zzp'ers", "Leenstelsel studenten", "Geld cultuur", "Islamitische immigranten","Kinderpardon","Onderdak illegalen","Hypotheekrente",
-			"Verhuurdersheffing","Schiphol","Kilometerheffing","Nieuwe wegen","Kolencentrales","Btw-tarief vlees","Voltooid leven","Landelijk zorgfonds","Defensie-uitgaven","Europees leger","Ontwikkelingshulp","EU-lidmaatschap"];
-var questionTextArray =[
+var questionHeaderArray = ["Bindend referendum", "Maatschappelijke dienstplicht", "Anoniem solliciteren", "Groepsbelediging", "Teelt en verkoop wiet", " Vervroegde vrijlating", "Vennootschapsbelasting",
+	"Belasting hoogste inkomens", "Tijdelijke arbeidscontracten", "AOW-leeftijd 65", "Verzekering zzp'ers", "Leenstelsel studenten", "Geld cultuur", "Islamitische immigranten", "Kinderpardon", "Onderdak illegalen", "Hypotheekrente",
+	"Verhuurdersheffing", "Schiphol", "Kilometerheffing", "Nieuwe wegen", "Kolencentrales", "Btw-tarief vlees", "Voltooid leven", "Landelijk zorgfonds", "Defensie-uitgaven", "Europees leger", "Ontwikkelingshulp", "EU-lidmaatschap"];
+var questionTextArray = [
 	"Er moet een bindend referendum komen, waarmee burgers door het parlement aangenomen wetten kunnen tegenhouden.",
 	"Er moet een maatschappelijke dienstplicht voor jongeren komen. Zij kunnen dan dienen in het leger, bij de politie of in de zorg.",
 	"Om discriminatie op basis van de naam te voorkomen, moet anoniem solliciteren bij de overheid en bij openbare instellingen de regel worden.",
-	"Belediging van groepen op grond van ras, godsdienst of geaardheid moet niet langer strafbaar zijn.", 
+	"Belediging van groepen op grond van ras, godsdienst of geaardheid moet niet langer strafbaar zijn.",
 	"De teelt en verkoop van wiet moet legaal worden.",
 	"De vervroegde vrijlating onder voorwaarden van gevangenen moet stoppen. Zij moeten hun straf helemaal uitzitten.",
 	"De belasting over de winst van ondernemingen (vennootschapsbelasting) moet omlaag.",
@@ -48,58 +48,58 @@ var optionskip = document.getElementById('optionskip');
 var text = document.getElementById('text');
 var h1 = document.getElementById('h1');
 
-function onloadhead(){
-     if(start === 0 ){
-	backbutton.style.display = 'none';
-	option1.style.display = 'none';
-	option2.style.display = 'none';
-	option3.style.display = 'none';
-	optionskip.style.display = 'none';
-	startbutton.style.display = 'block ';
-     }
-     else{
-	 backbutton.style.display = 'block';
-	option1.style.display = 'block';
-	option2.style.display = 'block';
-	option3.style.display = 'block';
-	optionskip.style.display = 'block';
-	startbutton.style.display = 'none ';    
-     }
+function onloadHead() {
+	if (start === 0) {
+		backbutton.style.display = 'none';
+		option1.style.display = 'none';
+		option2.style.display = 'none';
+		option3.style.display = 'none';
+		optionskip.style.display = 'none';
+		startbutton.style.display = 'block ';
+	} else {
+		backbutton.style.display = 'block';
+		option1.style.display = 'block';
+		option2.style.display = 'block';
+		option3.style.display = 'block';
+		optionskip.style.display = 'block';
+		startbutton.style.display = 'none ';
+	}
 }
 
-function upStart(){
+function upStart() {
 	return start = 1;
 }
 
-function upQuestion(){
+function upQuestion(givenAwnser) {
+	awnser(givenAwnser);
 	if (questionNumber < 30) {
-	return questionNumber ++, NextQuestion();	
+		return questionNumber++, NextQuestion();
 	}
-	
+
 }
 
-function downQuestion(){
-	if(questionNumber > 0){
-	return questionNumber --, NextQuestion();
+function downQuestion() {
+	if (questionNumber > 0) {
+		return questionNumber--, NextQuestion();
 	}
 }
 
-function awnser($awnser){
-	console.log(awnsers);
-	return awnsers[questionNumber] = $awnser;
+function awnser(givenAwnser) {
+	console.log(givenAwnser);
+	return awnsers[questionNumber] = givenAwnser;
 }
 
-function NextQuestion(){
-	
-	if (start === 0){
-	upStart();
+function NextQuestion() {
+
+	if (start === 0) {
+		upStart();
 	}
-	onloadhead();
-		h1.innerHTML= questionHeaderArray[questionNumber];
-		text.innerHTML =  questionTextArray[questionNumber];
-	backbutton.setAttribute("onClick", "minQuestion();");	
-	option1.setAttribute("onClick", "upQuestion()" , "awnser(1)");	
-	option2.setAttribute("onClick", "upQuestion()" , "awnser(2)");	
-	option3.setAttribute("onClick", "upQuestion()" , "awnser(3)");
-	optionskip.setAttribute("onClick", "upQuestion()" , "awnser(4)");	
+	onloadHead();
+	h1.innerHTML = questionHeaderArray[questionNumber];
+	text.innerHTML = questionTextArray[questionNumber];
+	backbutton.setAttribute("onClick", "minQuestion();");
+	option1.setAttribute("onClick", "upQuestion(1)"); // option 1 = eens
+	option2.setAttribute("onClick", "upQuestion(2)"); // option 2 = geen van beide
+	option3.setAttribute("onClick", "upQuestion(3)"); // option 3 = niet eens
+	optionskip.setAttribute("onClick", "upQuestion(4)"); // option 4 = skip
 }
