@@ -5,10 +5,24 @@
 	height: 600px;
 	width: 900px;
 	border:black solid 2px;
+	position: relative;
 }
 #start{
 	margin: 100px 150px;
 	height: 160px;
 	width: 580px;
 	background-color: lightblue;
+}
+#partiestext{
+	height: 50px;
+	width: 100%;
+	position: absolute;
+	bottom: 0;
+	background-color: lightgrey;
+	border: black 2px groove;
+}
+.partyaff{
+	display: inline;
+	margin: 0px 100px;
+	
 }

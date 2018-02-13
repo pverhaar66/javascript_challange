@@ -38,7 +38,7 @@ var questionTextArray = [
 	"Nederland moet uit de Europese Unie (EU) stappen."
 ];
 
-
+var partiestext = document.getElementById('partiestext');
 var backbutton = document.getElementById('back');
 var startbutton = document.getElementById('start');
 var option1 = document.getElementById('option1');
@@ -50,6 +50,7 @@ var h1 = document.getElementById('h1');
 
 function onloadHead() {
 	if (start === 0) {
+		partiestext.style.display = 'none';
 		backbutton.style.display = 'none';
 		option1.style.display = 'none';
 		option2.style.display = 'none';
@@ -57,6 +58,7 @@ function onloadHead() {
 		optionskip.style.display = 'none';
 		startbutton.style.display = 'block ';
 	} else {
+		partiestext.style.display = 'block';
 		backbutton.style.display = 'block';
 		option1.style.display = 'block';
 		option2.style.display = 'block';
@@ -82,6 +84,9 @@ function downQuestion() {
 	if (questionNumber > 0) {
 		return questionNumber--, NextQuestion();
 	}
+	if (questionNumber -- === 0) {
+		location.reload();
+	}
 }
 
 function awnser(givenAwnser) {
@@ -97,9 +102,9 @@ function NextQuestion() {
 	onloadHead();
 	h1.innerHTML = questionHeaderArray[questionNumber];
 	text.innerHTML = questionTextArray[questionNumber];
-	backbutton.setAttribute("onClick", "minQuestion();");
-	option1.setAttribute("onClick", "upQuestion(1)"); // option 1 = eens
-	option2.setAttribute("onClick", "upQuestion(2)"); // option 2 = geen van beide
-	option3.setAttribute("onClick", "upQuestion(3)"); // option 3 = niet eens
-	optionskip.setAttribute("onClick", "upQuestion(4)"); // option 4 = skip
+	backbutton.setAttribute("onClick", "downQuestion();");
+	option1.setAttribute("onClick", "upQuestion(1)"); // option 1 = eens == pro
+	option2.setAttribute("onClick", "upQuestion(2)"); // option 2 = geen van beide == none of both
+	option3.setAttribute("onClick", "upQuestion(3)"); // option 3 = niet eens == against
+	optionskip.setAttribute("onClick", "upQuestion(4)"); // option 4 = skip == none
 }
