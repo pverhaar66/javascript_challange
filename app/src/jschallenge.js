@@ -1,43 +1,13 @@
 
 
 var start = 0;
-var questionNumber = 0;
+var questionNumber = 28;
+var showpartysthought = 1;
 var awnsers = [];
-var questionHeaderArray = ["Bindend referendum", "Maatschappelijke dienstplicht", "Anoniem solliciteren", "Groepsbelediging", "Teelt en verkoop wiet", " Vervroegde vrijlating", "Vennootschapsbelasting",
-	"Belasting hoogste inkomens", "Tijdelijke arbeidscontracten", "AOW-leeftijd 65", "Verzekering zzp'ers", "Leenstelsel studenten", "Geld cultuur", "Islamitische immigranten", "Kinderpardon", "Onderdak illegalen", "Hypotheekrente",
-	"Verhuurdersheffing", "Schiphol", "Kilometerheffing", "Nieuwe wegen", "Kolencentrales", "Btw-tarief vlees", "Voltooid leven", "Landelijk zorgfonds", "Defensie-uitgaven", "Europees leger", "Ontwikkelingshulp", "EU-lidmaatschap"];
-var questionTextArray = [
-	"Er moet een bindend referendum komen, waarmee burgers door het parlement aangenomen wetten kunnen tegenhouden.",
-	"Er moet een maatschappelijke dienstplicht voor jongeren komen. Zij kunnen dan dienen in het leger, bij de politie of in de zorg.",
-	"Om discriminatie op basis van de naam te voorkomen, moet anoniem solliciteren bij de overheid en bij openbare instellingen de regel worden.",
-	"Belediging van groepen op grond van ras, godsdienst of geaardheid moet niet langer strafbaar zijn.",
-	"De teelt en verkoop van wiet moet legaal worden.",
-	"De vervroegde vrijlating onder voorwaarden van gevangenen moet stoppen. Zij moeten hun straf helemaal uitzitten.",
-	"De belasting over de winst van ondernemingen (vennootschapsbelasting) moet omlaag.",
-	"De hoogste inkomensgroepen moeten meer belasting gaan betalen.",
-	"De periode waarbinnen je meerdere tijdelijke arbeidscontracten na elkaar kunt afsluiten, moet langer worden dan twee jaar.",
-	"De AOW-leeftijd moet weer 65 jaar worden.",
-	"Er moet een verplichte verzekering tegen arbeidsongeschiktheid en ziekte komen voor alle zelfstandigen zonder personeel (zzp'ers).",
-	"Het leenstelsel voor studenten moet worden afgeschaft. De basisbeurs moet weer terugkomen.",
-	"Er moet meer geld naar kunst en cultuur.",
-	"Nederland moet de grenzen sluiten voor islamitische immigranten.",
-	"In Nederland opgegroeide kinderen van asielzoekers moeten hier kunnen blijven (kinderpardon).",
-	"De regering moet gemeenten verbieden illegale vreemdelingen onderdak te geven.",
-	"De regeling voor de aftrek van de hypotheekrente moet niet verder worden aangetast.",
-	"Woningcorporaties moeten meer goedkope huurwoningen bouwen. Daarom moet de belasting die zij betalen over huurwoningen (verhuurdersheffing) worden afgeschaft.",
-	"Luchthaven Schiphol moet kunnen uitbreiden.",
-	"De regering moet niet het bezit van de auto, maar het aantal gereden kilometers belasten.",
-	"Er moet meer geld naar de aanleg van nieuwe wegen.",
-	"Alle kolencentrales mogen voorlopig open blijven.",
-	"Voor vlees moet het hoge btw-tarief van 21 procent gaan gelden.",
-	"Ouderen die vinden dat hun leven voltooid is moeten hulp kunnen krijgen om een einde aan hun leven te maken.",
-	"Er moet een landelijk zorgfonds komen, zodat het stelsel van particuliere zorgverzekeraars kan verdwijnen.",
-	"De uitgaven voor defensie moeten de komende jaren fors omhoog naar 2 procent van het nationale inkomen (de NAVO-norm).",
-	"Er moet een Europees leger komen.",
-	"Nederland moet meer geld uitgeven voor de ontwikkeling van arme landen.",
-	"Nederland moet uit de Europese Unie (EU) stappen."
-];
+var data = [];
 
+var extremesection = document.getElementById('section');
+var partytextbutton = document.getElementById('partytextbutton');
 var partiestext = document.getElementById('partiestext');
 var backbutton = document.getElementById('back');
 var startbutton = document.getElementById('start');
@@ -50,6 +20,7 @@ var h1 = document.getElementById('h1');
 
 function onloadHead() {
 	if (start === 0) {
+		partytextbutton.style.display = 'none';
 		partiestext.style.display = 'none';
 		backbutton.style.display = 'none';
 		option1.style.display = 'none';
@@ -57,8 +28,10 @@ function onloadHead() {
 		option3.style.display = 'none';
 		optionskip.style.display = 'none';
 		startbutton.style.display = 'block ';
-	} else {
-		partiestext.style.display = 'block';
+	}
+	if (start === 1) {
+		partiestext.style.display = 'none';
+		partytextbutton.style.display = 'block';
 		backbutton.style.display = 'block';
 		option1.style.display = 'block';
 		option2.style.display = 'block';
@@ -74,37 +47,98 @@ function upStart() {
 
 function upQuestion(givenAwnser) {
 	awnser(givenAwnser);
-	if (questionNumber < 30) {
-		return questionNumber++, NextQuestion();
+	if (questionNumber < 29) {
+		return questionNumber++, nextQuestion();
+	} else {
+		getResults();
+		partytextbutton.style.display = 'none';
+		partiestext.style.display = 'none';
+		backbutton.style.display = 'none';
+		option1.style.display = 'none';
+		option2.style.display = 'none';
+		option3.style.display = 'none';
+		optionskip.style.display = 'none';
+		startbutton.style.display = 'none ';
 	}
 
 }
 
 function downQuestion() {
 	if (questionNumber > 0) {
-		return questionNumber--, NextQuestion();
+		return questionNumber--, nextQuestion();
 	}
-	if (questionNumber -- === 0) {
+	if (questionNumber-- === 0) {
 		location.reload();
 	}
 }
 
 function awnser(givenAwnser) {
-	console.log(givenAwnser);
 	return awnsers[questionNumber] = givenAwnser;
 }
 
-function NextQuestion() {
-
+function nextQuestion() {
+	console.log(questionNumber);
 	if (start === 0) {
 		upStart();
 	}
 	onloadHead();
 	h1.innerHTML = questionHeaderArray[questionNumber];
 	text.innerHTML = questionTextArray[questionNumber];
+	partiestext.innerHTML = partiesThought[questionNumber];
 	backbutton.setAttribute("onClick", "downQuestion();");
 	option1.setAttribute("onClick", "upQuestion(1)"); // option 1 = eens == pro
 	option2.setAttribute("onClick", "upQuestion(2)"); // option 2 = geen van beide == none of both
 	option3.setAttribute("onClick", "upQuestion(3)"); // option 3 = niet eens == against
 	optionskip.setAttribute("onClick", "upQuestion(4)"); // option 4 = skip == none
+	partytextbutton.setAttribute("onClick", "switchButtonPartyText()");//
+
+
+}
+function switchButtonPartyText() {
+
+	if (showpartysthought == 0) {
+		partiestext.style.display = 'none';
+		return showpartysthought = 1;
+	}
+	if (showpartysthought == 1) {
+		partiestext.style.display = 'block';
+		return showpartysthought = 0;
+	}
+}
+
+function getResults() {
+	h1.innerHTML = "Welke partijen wilt u meenemen in het resultaat?";
+	text.innerHTML = "U kunt kiezen voor zittende partijen, die nu in de Tweede Kamer vertegenwoordigd zijn. \n\
+			Daarbij nemen we ook de partijen mee die in de peilingen op minimaal één zetel staan. \n\
+			U kunt alle partijen meenemen en u kunt een eigen selectie maken van tenminste drie partijen."
+	var button = document.createElement("button");
+	var t = document.createTextNode("Zie het reultaat");
+	button.appendChild(t);
+	button.setAttribute("onclick", "showResults()")
+	extremesection.appendChild(button);
+
+	for (var i = 0; i < getTotalAmountOfPartys(); i++) {
+		var tr = document.createElement('tr');
+		tr.id = "trs";
+		extremesection.appendChild(tr);
+		var checkbox = document.createElement('input');
+		var p = document.createElement('p');
+		checkbox.type = 'checkbox';
+		tr.appendChild(checkbox);
+		var partyname = document.createTextNode(parties[i]['name']);
+		tr.appendChild(p);
+		p.appendChild(partyname);	
+	}
+	if (checkbox.checked) {
+		data.push(partyname);
+	}
+}
+
+function showResults() {
+	console.log(data);
+	console.log(awnsers);
+	
+	for (var i = 0; i < getTotalAmountOfPartys(); i++) {
+		
+	}
 }

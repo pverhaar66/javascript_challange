@@ -1,8 +1,7 @@
 
 
-.section{
+#section{
 	margin: auto;
-	height: 600px;
 	width: 900px;
 	border:black solid 2px;
 	position: relative;
@@ -14,15 +13,20 @@
 	background-color: lightblue;
 }
 #partiestext{
-	height: 50px;
 	width: 100%;
-	position: absolute;
-	bottom: 0;
-	background-color: lightgrey;
 	border: black 2px groove;
+	background-color: lightgrey;
+	height: 30px;
+	width: 100%;
+	padding-top:  6px;
+
 }
 .partyaff{
 	display: inline;
-	margin: 0px 100px;
+	margin: 0px  100%;
 	
+}
+#trs{
+	display: flex;
+	flex-direction: row;
 }
