@@ -3,7 +3,6 @@
 #section{
 	margin: auto;
 	width: 900px;
-	border:black solid 2px;
 	position: relative;
 }
 #start{
@@ -11,6 +10,23 @@
 	height: 160px;
 	width: 580px;
 	background-color: lightblue;
+}
+#savebutton{
+	height: 30px;
+	width: 150px;
+	background-color: burlywood;
+	font-size: 20px;
+}
+#savebutton:hover{
+	background-color: aliceblue;
+}
+h1{
+	font-size: 40px;
+	margin: 0 auto;
+}
+#text{
+	margin: 10px auto;
+	font-size: 20px;
 }
 #partiestext{
 	width: 100%;
@@ -29,4 +45,6 @@
 #trs{
 	display: flex;
 	flex-direction: row;
+	margin: 2px auto;
+	border: aquamarine 2px solid;
 }

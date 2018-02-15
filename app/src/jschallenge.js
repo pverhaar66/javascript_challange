@@ -77,7 +77,6 @@ function awnser(givenAwnser) {
 }
 
 function nextQuestion() {
-	console.log(questionNumber);
 	if (start === 0) {
 		upStart();
 	}
@@ -86,10 +85,10 @@ function nextQuestion() {
 	text.innerHTML = questionTextArray[questionNumber];
 	partiestext.innerHTML = partiesThought[questionNumber];
 	backbutton.setAttribute("onClick", "downQuestion();");
-	option1.setAttribute("onClick", "upQuestion(1)"); // option 1 = eens == pro
-	option2.setAttribute("onClick", "upQuestion(2)"); // option 2 = geen van beide == none of both
-	option3.setAttribute("onClick", "upQuestion(3)"); // option 3 = niet eens == against
-	optionskip.setAttribute("onClick", "upQuestion(4)"); // option 4 = skip == none
+	option1.setAttribute("onClick", "upQuestion('pro')"); // option 1 = eens == pro
+	option2.setAttribute("onClick", "upQuestion('ambivalent')"); // option 2 = geen van beide == none of both
+	option3.setAttribute("onClick", "upQuestion('contra')"); // option 3 = niet eens == against
+	optionskip.setAttribute("onClick", "upQuestion('none')"); // option 4 = skip == none
 	partytextbutton.setAttribute("onClick", "switchButtonPartyText()");//
 
 
@@ -114,20 +113,21 @@ function getResults() {
 	var button = document.createElement("button");
 	var t = document.createTextNode("Zie het reultaat");
 	button.appendChild(t);
+	button.id = "savebutton";
 	button.setAttribute("onclick", "showResults()")
 	extremesection.appendChild(button);
 
 	for (var i = 0; i < getTotalAmountOfPartys(); i++) {
-		var tr = document.createElement('tr');
-		tr.id = "trs";
-		extremesection.appendChild(tr);
+		var td = document.createElement('tr');
+		td.id = "trs";
+		extremesection.appendChild(td);
 		var checkbox = document.createElement('input');
-		var p = document.createElement('p');
+		var p = document.createElement('p');	
 		checkbox.type = 'checkbox';
-		tr.appendChild(checkbox);
+		td.appendChild(checkbox);
 		var partyname = document.createTextNode(parties[i]['name']);
-		tr.appendChild(p);
-		p.appendChild(partyname);	
+		td.appendChild(p);
+		p.appendChild(partyname);
 	}
 	if (checkbox.checked) {
 		data.push(partyname);
@@ -137,8 +137,14 @@ function getResults() {
 function showResults() {
 	console.log(data);
 	console.log(awnsers);
-	
-	for (var i = 0; i < getTotalAmountOfPartys(); i++) {
-		
+
+	for (var q = 0; q < questionHeaderArray.length; q++) {
+		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
+			if (partiesThought[q][i]['position'] == awnsers[q]) {
+				scoreboard[i]['score']++;
+			}
+		}
 	}
+
+	console.log(scoreboard);
 }
