@@ -1,12 +1,16 @@
 
 
 var start = 0;
-var questionNumber = 28;
+var questionnumber = 28;
 var showpartysthought = 1;
+var skipcounter = 0;
+var scorearray = [];
 var awnsers = [];
 var data = [];
+var button = document.createElement("button");
+var secular = "all";
 
-var extremesection = document.getElementById('section');
+var extrasection = document.getElementById('startsection');
 var partytextbutton = document.getElementById('partytextbutton');
 var partiestext = document.getElementById('partiestext');
 var backbutton = document.getElementById('back');
@@ -47,8 +51,8 @@ function upStart() {
 
 function upQuestion(givenAwnser) {
 	awnser(givenAwnser);
-	if (questionNumber < 29) {
-		return questionNumber++, nextQuestion();
+	if (questionnumber < 29) {
+		return questionnumber++, nextQuestion();
 	} else {
 		getResults();
 		partytextbutton.style.display = 'none';
@@ -64,16 +68,20 @@ function upQuestion(givenAwnser) {
 }
 
 function downQuestion() {
-	if (questionNumber > 0) {
-		return questionNumber--, nextQuestion();
+	if (questionnumber > 0) {
+		return questionnumber--, nextQuestion();
 	}
-	if (questionNumber-- === 0) {
+	if (questionnumber-- === 0) {
 		location.reload();
 	}
 }
 
 function awnser(givenAwnser) {
-	return awnsers[questionNumber] = givenAwnser;
+	if (givenAwnser === "skip") {
+		return skipcounter++;
+	} else {
+		return awnsers[questionnumber] = givenAwnser;
+	}
 }
 
 function nextQuestion() {
@@ -81,14 +89,14 @@ function nextQuestion() {
 		upStart();
 	}
 	onloadHead();
-	h1.innerHTML = questionHeaderArray[questionNumber];
-	text.innerHTML = questionTextArray[questionNumber];
-	partiestext.innerHTML = partiesThought[questionNumber];
+	h1.innerHTML = questionHeaderArray[questionnumber];
+	text.innerHTML = questionTextArray[questionnumber];
+	partiestext.innerHTML = partiesThought[questionnumber];
 	backbutton.setAttribute("onClick", "downQuestion();");
 	option1.setAttribute("onClick", "upQuestion('pro')"); // option 1 = eens == pro
 	option2.setAttribute("onClick", "upQuestion('ambivalent')"); // option 2 = geen van beide == none of both
 	option3.setAttribute("onClick", "upQuestion('contra')"); // option 3 = niet eens == against
-	optionskip.setAttribute("onClick", "upQuestion('none')"); // option 4 = skip == none
+	optionskip.setAttribute("onClick", "upQuestion('skip')"); // option 4 = skip == none
 	partytextbutton.setAttribute("onClick", "switchButtonPartyText()");//
 
 
@@ -114,37 +122,86 @@ function getResults() {
 	var t = document.createTextNode("Zie het reultaat");
 	button.appendChild(t);
 	button.id = "savebutton";
-	button.setAttribute("onclick", "showResults()")
-	extremesection.appendChild(button);
-
-	for (var i = 0; i < getTotalAmountOfPartys(); i++) {
-		var td = document.createElement('tr');
-		td.id = "trs";
-		extremesection.appendChild(td);
-		var checkbox = document.createElement('input');
-		var p = document.createElement('p');	
-		checkbox.type = 'checkbox';
-		td.appendChild(checkbox);
-		var partyname = document.createTextNode(parties[i]['name']);
-		td.appendChild(p);
-		p.appendChild(partyname);
+	button.setAttribute("onclick", "showResults()");
+	extrasection.appendChild(button);
+	if (secular == "all") {
+		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
+			var tr = document.createElement('tr');
+			tr.id = "trs";
+			tr.value = parties[i]['name'];
+			extrasection.appendChild(tr);
+			var checkbox = document.createElement('input');
+			var p = document.createElement('p');
+			checkbox.type = 'checkbox';
+			tr.appendChild(checkbox);
+			var partyname = document.createTextNode(parties[i]['name']);
+			tr.appendChild(p);
+			p.appendChild(partyname);
+		}
+	}
+	if (secular == "true") {
+		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
+			if (parties[i]['secular'] == true) {
+				var tr = document.createElement('tr');
+				tr.id = "trs";
+				tr.value = parties[i]['name'];
+				extrasection.appendChild(tr);
+				var checkbox = document.createElement('input');
+				var p = document.createElement('p');
+				checkbox.type = 'checkbox';
+				tr.appendChild(checkbox);
+				var partyname = document.createTextNode(parties[i]['name']);
+				tr.appendChild(p);
+				p.appendChild(partyname);
+			}
+		}
+	} else {
+		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
+			if (parties[i]['secular'] == false) {
+				var tr = document.createElement('tr');
+				tr.id = "trs";
+				tr.value = parties[i]['name'];
+				extrasection.appendChild(tr);
+				var checkbox = document.createElement('input');
+				var p = document.createElement('p');
+				checkbox.type = 'checkbox';
+				tr.appendChild(checkbox);
+				var partyname = document.createTextNode(parties[i]['name']);
+				tr.appendChild(p);
+				p.appendChild(partyname);
+			}
+		}
 	}
 	if (checkbox.checked) {
-		data.push(partyname);
+		var value = tr.value;
+		return data[array.length] = value;
 	}
 }
 
 function showResults() {
-	console.log(data);
-	console.log(awnsers);
+	console.log("data array", data);
+	extrasection.style.display = 'none';
+	if (skipcounter >= 15) {
+		h1.innerHTML = "u heeft teveel vragen overgeslagen wij kunnen u geen goed antwoord geven";
+		text.style.display = 'none';
+	} else {
 
-	for (var q = 0; q < questionHeaderArray.length; q++) {
-		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
-			if (partiesThought[q][i]['position'] == awnsers[q]) {
-				scoreboard[i]['score']++;
+		for (var q = 0; q < questionHeaderArray.length; q++) {
+			for (var i = 0; i < getTotalAmountOfPartys(); i++) {
+				if (partiesThought[q][i]['position'] == awnsers[q]) {
+					scoreboard[i]['score']++;
+
+				}
 			}
 		}
+		h1.innerHTML = "Uw mening komt het best overeen met :";
+		scoreboard.sort();
+		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
+			scorearray.push(scoreboard[i]['name']);
+		}
+		var results = scorearray.slice(0, 3);
+		text.innerHTML = results;
 	}
-
+	console.log(results);
 	console.log(scoreboard);
 }
