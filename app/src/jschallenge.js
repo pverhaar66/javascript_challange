@@ -6,10 +6,10 @@ var showpartysthought = 1;
 var skipcounter = 0;
 var scorearray = [];
 var awnsers = [];
-var data = [];
-var button = document.createElement("button");
+var data = [1, 1, 1];
 var secular = "all";
 
+var button = document.createElement("button");
 var extrasection = document.getElementById('startsection');
 var partytextbutton = document.getElementById('partytextbutton');
 var partiestext = document.getElementById('partiestext');
@@ -112,17 +112,39 @@ function switchButtonPartyText() {
 		return showpartysthought = 0;
 	}
 }
+function changesecu() {
+	extrasection.innerHTML=""; 
+	if (secular == "all") {	
+		return secular = "true",getResults();
+	}
+	if (secular == "true") {
+		return secular = "false",getResults();
+	}
+	if (secular == "false") {
+		return secular = "all", getResults();
+	}
+}
+
 
 function getResults() {
+
+
 	h1.innerHTML = "Welke partijen wilt u meenemen in het resultaat?";
 	text.innerHTML = "U kunt kiezen voor zittende partijen, die nu in de Tweede Kamer vertegenwoordigd zijn. \n\
 			Daarbij nemen we ook de partijen mee die in de peilingen op minimaal één zetel staan. \n\
 			U kunt alle partijen meenemen en u kunt een eigen selectie maken van tenminste drie partijen."
+	var btn = document.createElement("button");
+	var btntext = document.createTextNode("sort");
+	btn.appendChild(btntext);
+	btn.setAttribute("onclick", "changesecu()");
+	btn.id = "savebutton";
+	extrasection.appendChild(btn);
+
 	var button = document.createElement("button");
 	var t = document.createTextNode("Zie het reultaat");
 	button.appendChild(t);
 	button.id = "savebutton";
-	button.setAttribute("onclick", "showResults()");
+	button.setAttribute("onclick", "checkparties()");
 	extrasection.appendChild(button);
 	if (secular == "all") {
 		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
@@ -133,6 +155,7 @@ function getResults() {
 			var checkbox = document.createElement('input');
 			var p = document.createElement('p');
 			checkbox.type = 'checkbox';
+			checkbox.value = parties[i]['name'];
 			tr.appendChild(checkbox);
 			var partyname = document.createTextNode(parties[i]['name']);
 			tr.appendChild(p);
@@ -149,6 +172,7 @@ function getResults() {
 				var checkbox = document.createElement('input');
 				var p = document.createElement('p');
 				checkbox.type = 'checkbox';
+				checkbox.value = parties[i]['name'];
 				tr.appendChild(checkbox);
 				var partyname = document.createTextNode(parties[i]['name']);
 				tr.appendChild(p);
@@ -165,18 +189,36 @@ function getResults() {
 				var checkbox = document.createElement('input');
 				var p = document.createElement('p');
 				checkbox.type = 'checkbox';
+				checkbox.value = parties[i]['name'];
 				tr.appendChild(checkbox);
 				var partyname = document.createTextNode(parties[i]['name']);
 				tr.appendChild(p);
 				p.appendChild(partyname);
+
 			}
 		}
 	}
+
 	if (checkbox.checked) {
-		var value = tr.value;
-		return data[array.length] = value;
+		for (var g = 0; g < getTotalAmountOfPartys(); g++) {
+			if (checkbox.value == parties[g]['name']) {
+				data.push(checkbox.value);
+			}
+		}
+		return data
 	}
 }
+
+function checkparties() {
+	console.log(data);
+	if (data.length < 3) {
+		alert("kies alstublieft minimaal 3 partijen");
+	} else {
+		showResults();
+	}
+
+}
+
 
 function showResults() {
 	console.log("data array", data);
@@ -190,12 +232,13 @@ function showResults() {
 			for (var i = 0; i < getTotalAmountOfPartys(); i++) {
 				if (partiesThought[q][i]['position'] == awnsers[q]) {
 					scoreboard[i]['score']++;
-
 				}
 			}
 		}
 		h1.innerHTML = "Uw mening komt het best overeen met :";
-		scoreboard.sort();
+		scoreboard.sort(function (eerste, tweede) {
+			return tweede.score - eerste.score;
+		});
 		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
 			scorearray.push(scoreboard[i]['name']);
 		}
