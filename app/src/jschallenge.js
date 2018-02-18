@@ -8,8 +8,9 @@ var scoreArray = [];
 var awnsers = [];
 var awnsersMultiplier = [];
 var data = [];
-var secularity	 = "all";
+var secularity = "all";
 
+var questionMultiplierBox = document.getElementById('questionMultiplierBox');
 var extraSection = document.getElementById('startsection');
 var othersSection = document.getElementById('others');
 var partyTextButton = document.getElementById('partytextbutton');
@@ -42,8 +43,8 @@ function upStart() {
 	return start = 1;
 }
 
-function upQuestion(givenAwnser) {
-	awnser(givenAwnser);
+function upQuestion(givenAwnser, multiplier) {
+	awnser(givenAwnser, multiplier);
 	if (questionNumber < 29) {
 		return questionNumber++, nextQuestion();
 	} else {
@@ -65,9 +66,11 @@ function downQuestion() {
 	}
 }
 
-function awnser(givenAwnser) {
+function awnser(givenAwnser, multiplier) {
 	if (givenAwnser === "skip") {
 		return skipCounter++;
+	} else if (multiplier === 'x2') {
+		return awnsers[questionNumber] = givenAwnser, awnsersMultiplier[questionNumber] = 'x2';
 	} else {
 		return awnsers[questionNumber] = givenAwnser;
 	}
@@ -81,15 +84,29 @@ function nextQuestion() {
 	h1.innerHTML = questionHeaderArray[questionNumber];
 	text.innerHTML = questionTextArray[questionNumber];
 	partiesTextSection.innerHTML = partiesThought[questionNumber];
+
 	backButton.setAttribute("onClick", "downQuestion();");
-	option1.setAttribute("onClick", "upQuestion('pro')"); // option 1 = eens == pro
-	option2.setAttribute("onClick", "upQuestion('ambivalent')"); // option 2 = geen van beide == none of both
-	option3.setAttribute("onClick", "upQuestion('contra')"); // option 3 = niet eens == against
+	option1.setAttribute("onClick", "upQuestion('pro', 'x1')"); // option 1 = eens == pro
+	option2.setAttribute("onClick", "upQuestion('ambivalent', 'x1')"); // option 2 = geen van beide == none of both
+	option3.setAttribute("onClick", "upQuestion('contra', 'x1')"); // option 3 = niet eens == against
 	optionSkip.setAttribute("onClick", "upQuestion('skip')"); // option 4 = skip == none
+	questionMultiplierBox.addEventListener("change", function (event) {
+		if (event.target.checked == true) {
+			option1.setAttribute("onClick", "upQuestion('pro', 'x2')"); // option 1 = eens == pro
+			option2.setAttribute("onClick", "upQuestion('ambivalent', 'x2')"); // option 2 = geen van beide == none of both
+			option3.setAttribute("onClick", "upQuestion('contra', 'x2')"); // option 3 = niet eens == against
+			optionSkip.setAttribute("onClick", "upQuestion('skip')"); // option 4 = skip == none
+		}
+		if (event.target.checked == false) {
+			option1.setAttribute("onClick", "upQuestion('pro', 'x1')"); // option 1 = eens == pro
+			option2.setAttribute("onClick", "upQuestion('ambivalent', 'x1')"); // option 2 = geen van beide == none of both
+			option3.setAttribute("onClick", "upQuestion('contra', 'x1')"); // option 3 = niet eens == against
+			optionSkip.setAttribute("onClick", "upQuestion('skip')"); // option 4 = skip == none
+		}
+	});
 	partyTextButton.setAttribute("onClick", "switchButtonPartyText()");//
-
-
 }
+
 function switchButtonPartyText() {
 	if (showPartysThought == 0) {
 		partiesTextSection.style.display = 'none';
@@ -100,6 +117,7 @@ function switchButtonPartyText() {
 		return showPartysThought = 0;
 	}
 }
+
 function changesecu() {
 	// extrasection.innerHTML = ""; makes the section empty so it wont duplicate on sort
 	extraSection.innerHTML = "";
@@ -113,7 +131,6 @@ function changesecu() {
 		return secularity = "all", getResults();
 	}
 }
-
 
 function getResults() {
 	h1.innerHTML = "Welke partijen wilt u meenemen in het resultaat?";
@@ -245,8 +262,8 @@ function checkparties() {
 	}
 }
 
-
 function showResults() {
+	console.log(awnsers, awnsersMultiplier);
 	extraSection.style.display = 'none';
 	if (skipCounter >= 15) {
 		h1.innerHTML = "u heeft teveel vragen overgeslagen wij kunnen u geen goed antwoord geven";
@@ -264,7 +281,11 @@ function showResults() {
 		for (var q = 0; q < questionHeaderArray.length; q++) {
 			for (var i = 0; i < getTotalAmountOfPartys(); i++) {
 				if (partiesThought[q][i]['position'] == awnsers[q]) {
-					scoreboard[i]['score']++;
+					if (awnsersMultiplier[q] === 'x2') {
+						scoreboard[i]['score']= +2;
+					} else {
+						scoreboard[i]['score']++;
+					}
 				}
 			}
 		}

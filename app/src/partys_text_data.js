@@ -736,7 +736,7 @@ var partiesThought = [
 		{name: "Libertarische Partij", position: "ambivalent", explanation: "Geen toelichting gegeven"}
 	],
 	//28 Vennootschapsbelasting
-	[{name: "VVD", position: "pro", explanation: "Geen toelichting gegeven. "},
+	[{name: "VVD", position: "contra", explanation: "Geen toelichting gegeven. "},
 		{name: "PvdA", position: "ambivalent", explanation: "Geen toelichting gegeven"},
 		{name: "PVV", position: "ambivalent", explanation: "Geen toelichting gegeven"},
 		{name: "CDA", position: "ambivalent", explanation: "Geen toelichting gegeven"},
