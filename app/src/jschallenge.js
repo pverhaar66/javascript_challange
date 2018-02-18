@@ -1,7 +1,7 @@
 
 
 var start = 0;
-var questionNumber = 28;
+var questionNumber = 0 ;
 var showPartysThought = 1;
 var skipCounter = 0;
 var scoreArray = [];
@@ -230,7 +230,8 @@ function getResults() {
 				});
 			}
 		}
-	} else {
+	}
+	if (secularity == "false") {
 		for (var i = 0; i < getTotalAmountOfPartys(); i++) {
 			if (parties[i]['secular'] == false) {
 				var tr = document.createElement('tr');
