@@ -84,7 +84,20 @@ function nextQuestion() {
 	h1.innerHTML = questionHeaderArray[questionNumber];
 	text.innerHTML = questionTextArray[questionNumber];
 	partiesTextSection.innerHTML = partiesThought[questionNumber];
-
+	if (awnsers[questionNumber] != null) {
+		if (awnsers[questionNumber] === 'pro') {
+			console.log("ITS ME DIO (1)");
+			option1.style.background = 'red';
+		}
+		if (awnsers[questionNumber] === 'ambivalent') {
+			console.log("ITS ME DIO (2)");
+			option2.style.background = 'red';
+		}
+		if (awnsers[questionNumber] === 'contra') {
+			console.log("ITS ME DIO (3)");
+			option3.style.background = 'red';
+		}
+	}
 	backButton.setAttribute("onClick", "downQuestion();");
 	option1.setAttribute("onClick", "upQuestion('pro', 'x1')"); // option 1 = eens == pro
 	option2.setAttribute("onClick", "upQuestion('ambivalent', 'x1')"); // option 2 = geen van beide == none of both
@@ -282,7 +295,7 @@ function showResults() {
 			for (var i = 0; i < getTotalAmountOfPartys(); i++) {
 				if (partiesThought[q][i]['position'] == awnsers[q]) {
 					if (awnsersMultiplier[q] === 'x2') {
-						scoreboard[i]['score']= +2;
+						scoreboard[i]['score'] = +2;
 					} else {
 						scoreboard[i]['score']++;
 					}
