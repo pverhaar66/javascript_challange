@@ -1,9 +1,11 @@
-
-
 #section{
+	background-color: azure;
 	margin: auto;
 	width: 900px;
 	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+		flex-direction: column;
 }
 #start{
 	margin: 100px 150px;
