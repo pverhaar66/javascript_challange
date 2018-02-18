@@ -13,7 +13,7 @@ var secularity = "all";
 var questionMultiplierBox = document.getElementById('questionMultiplierBox');
 var extraSection = document.getElementById('startsection');
 var othersSection = document.getElementById('others');
-var partyTextButton = document.getElementById('partytextbutton');
+//var partyTextButton = document.getElementById('partytextbutton');
 var partiesTextSection = document.getElementById('partiestext');
 var backButton = document.getElementById('back');
 var startButton = document.getElementById('start');
@@ -117,7 +117,7 @@ function nextQuestion() {
 			optionSkip.setAttribute("onClick", "upQuestion('skip')"); // option 4 = skip == none
 		}
 	});
-	partyTextButton.setAttribute("onClick", "switchButtonPartyText()");//
+//	partyTextButton.setAttribute("onClick", "switchButtonPartyText()");
 }
 
 function switchButtonPartyText() {
